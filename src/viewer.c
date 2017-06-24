@@ -2,6 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 
+
+
+void exibir_dica( char *dica ) {
+    printf( "Dica: %s\n", dica );
+}
+
 void exibir_boneco( unsigned int quantidade_erros ) {
     switch( quantidade_erros ) {
         case 0:
