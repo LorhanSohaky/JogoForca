@@ -4,6 +4,11 @@
 #include <stdlib.h>
 #include <time.h>
 
+unsigned int sortear_linha( unsigned int quantidade_linhas ) {
+    srand( time( NULL ) );
+    return rand() % quantidade_linhas;
+}
+
 unsigned int pegar_total_linhas( char *arquivo_palavra ) {
     FILE *arquivo;
     unsigned int quantidade_linhas = 0;
