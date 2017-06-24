@@ -28,7 +28,6 @@ unsigned int pegar_total_linhas( char *arquivo_palavra ) {
     return quantidade_linhas;
 }
 
-
 void ir_para_linha( FILE *arquivo, unsigned int linha ) {
     unsigned int i = 0;
 
@@ -39,3 +38,18 @@ void ir_para_linha( FILE *arquivo, unsigned int linha ) {
     }
 }
 
+String *ler_string( FILE *arquivo ) {
+    char tmp[101];
+
+    String *string = string_new();
+
+    if( !string ) {
+        return NULL;
+    }
+
+    while( fscanf( arquivo, "%100[^\n]", tmp ) ) {
+        string_concat_char_array( string, tmp );
+    }
+
+    return string;
+}
