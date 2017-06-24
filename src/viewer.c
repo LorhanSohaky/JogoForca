@@ -2,6 +2,21 @@
 #include <stdio.h>
 #include <string.h>
 
+void exibir_boneco( unsigned int quantidade_erros );
+void exibir_dica( char *dica );
+void exibir_mascara( char *mascara );
+void exibir_letras_erradas( char *letras_tentadas );
+
+void exibir_jogo( unsigned int quantidade_erros,
+                  char *dica,
+                  char *mascara,
+                  char *letras_tentadas ) {
+    exibir_boneco( quantidade_erros );
+    exibir_dica( dica );
+    exibir_mascara( mascara );
+    exibir_letras_erradas( letras_tentadas );
+}
+
 void exibir_letras_erradas( char *letras_tentadas ) {
     static unsigned int i;
 
