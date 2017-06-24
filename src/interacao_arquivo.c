@@ -4,6 +4,29 @@
 #include <stdlib.h>
 #include <time.h>
 
+Palavra pegar_palavra( char *arquivo_palavra, unsigned int linha_palavra ) {
+    FILE *arquivo;
+
+    Palavra palavra;
+
+    arquivo = fopen( arquivo_palavra, "r" );
+    if( !arquivo ) {
+        return palavra;
+    }
+
+    ir_para_linha( arquivo, linha_palavra );
+
+    fscanf( arquivo, "%d", &palavra.fk_dica );
+
+    fscanf( arquivo, "%*c" );
+
+    palavra.palavra = ler_string( arquivo );
+
+    fclose( arquivo );
+
+    return palavra;
+}
+
 unsigned int sortear_linha( unsigned int quantidade_linhas ) {
     srand( time( NULL ) );
     return rand() % quantidade_linhas;
