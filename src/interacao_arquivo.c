@@ -28,3 +28,14 @@ unsigned int pegar_total_linhas( char *arquivo_palavra ) {
     return quantidade_linhas;
 }
 
+
+void ir_para_linha( FILE *arquivo, unsigned int linha ) {
+    unsigned int i = 0;
+
+    while( linha != i ) {
+        fscanf( arquivo, "%*[^\n]" );
+        fscanf( arquivo, "%*c" );
+        i++;
+    }
+}
+
