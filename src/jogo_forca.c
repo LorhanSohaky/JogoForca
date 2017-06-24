@@ -74,4 +74,14 @@ int comparar_mascara_palavra( char *mascara, char *palavra ) {
     return strcmp( mascara, palavra );
 }
 
+bool existe_letra_nas_erradas( char carac, char *letras_erradas ) {
+    unsigned int i;
+
+    for( i = 0; i < strlen( letras_erradas ); i++ ) {
+        if( carac == letras_erradas[i] ) {
+            return true;
+        }
+    }
+    return false;
+}
 
