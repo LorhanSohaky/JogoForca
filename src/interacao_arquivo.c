@@ -4,6 +4,26 @@
 #include <stdlib.h>
 #include <time.h>
 
+Palavra pegar_palavra( char *arquivo_palavra, unsigned int linha_palavra );
+Dica pegar_dica( char *arquivo_dica, unsigned int linha_dica );
+
+void ir_para_linha( FILE *arquivo, unsigned int linha );
+String *ler_string( FILE *arquivo );
+
+unsigned int pegar_total_linhas( char *arquivo_palavra );
+unsigned int sortear_linha( unsigned int quantidade_linhas );
+
+Palavra sortear_palavra( char *arquivo_palavra, char *arquivo_dica ) {
+    Palavra palavra;
+
+    palavra =
+        pegar_palavra( arquivo_palavra, sortear_linha( pegar_total_linhas( arquivo_palavra ) ) );
+
+    palavra.dica = pegar_dica( arquivo_dica, palavra.fk_dica );
+
+    return palavra;
+}
+
 Palavra pegar_palavra( char *arquivo_palavra, unsigned int linha_palavra ) {
     FILE *arquivo;
 
