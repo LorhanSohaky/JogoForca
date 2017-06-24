@@ -27,6 +27,24 @@ Palavra pegar_palavra( char *arquivo_palavra, unsigned int linha_palavra ) {
     return palavra;
 }
 
+Dica pegar_dica( char *arquivo_dica, unsigned int linha_dica ) {
+    FILE *arquivo;
+
+    Dica dica;
+
+    arquivo = fopen( arquivo_dica, "r" );
+    if( !arquivo ) {
+        return dica;
+    }
+
+    ir_para_linha( arquivo, linha_dica );
+    dica.dica = ler_string( arquivo );
+
+    fclose( arquivo );
+
+    return dica;
+}
+
 unsigned int sortear_linha( unsigned int quantidade_linhas ) {
     srand( time( NULL ) );
     return rand() % quantidade_linhas;
