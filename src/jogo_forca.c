@@ -70,3 +70,8 @@ void substituir_letra_na_mascara( char carac, char *palavra, char *mascara ) {
     }
 }
 
+int comparar_mascara_palavra( char *mascara, char *palavra ) {
+    return strcmp( mascara, palavra );
+}
+
+
