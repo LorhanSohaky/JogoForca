@@ -26,6 +26,7 @@ bool existe_letra_nas_erradas( char carac, char *letras_erradas );
 
 int comparar_mascara_palavra( char *mascara, char *palavra );
 void substituir_letra_na_mascara( char carac, char *palavra, char *mascara );
+void init_configuracoes( Jogo *jogo, char *arquivo_palavra, char *arquivo_dica );
 void init_mascarara( char *mascara, char *palavra, unsigned int tamanho_palavra );
 void finalizar( Jogo *jogo );
 
