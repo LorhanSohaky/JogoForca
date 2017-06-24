@@ -85,3 +85,9 @@ bool existe_letra_nas_erradas( char carac, char *letras_erradas ) {
     return false;
 }
 
+void finalizar( Jogo *jogo ) {
+    string_free( jogo->palavra.palavra );
+    string_free( jogo->palavra.dica.dica );
+    string_free( jogo->mascara );
+    string_free( jogo->letras_erradas );
+}
