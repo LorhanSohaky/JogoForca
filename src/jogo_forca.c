@@ -8,6 +8,20 @@
 
 #define MAX_ERRO 6
 
+typedef struct {
+    bool ganhou;
+
+    Palavra palavra;
+
+    unsigned int quantidade_erros;
+    String *letras_erradas;
+    String *mascara;
+
+    char *arquivo_dica;
+    char *arquivo_palavra;
+} Jogo;
+
+
 void init_configuracoes( Jogo *jogo, char *arquivo_palavra, char *arquivo_dica ) {
     jogo->quantidade_erros = 0;
     jogo->ganhou = false;
