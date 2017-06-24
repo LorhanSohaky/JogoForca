@@ -2,6 +2,17 @@
 #include <stdio.h>
 #include <string.h>
 
+void exibir_letras_erradas( char *letras_tentadas ) {
+    static unsigned int i;
+
+    printf( "\n" );
+    printf( "LETRAS ERRADAS: " );
+    for( i = 0; i < strlen( letras_tentadas ); i++ ) {
+        printf( "%c ", *( letras_tentadas + i ) ); //É mais rápido que indexação
+    }
+    printf( "\b\n" );
+}
+
 void exibir_mascara( char *mascara ) {
     static unsigned int i;
 
