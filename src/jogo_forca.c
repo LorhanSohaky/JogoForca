@@ -21,7 +21,6 @@ typedef struct {
     char *arquivo_palavra;
 } Jogo;
 
-
 void init_configuracoes( Jogo *jogo, char *arquivo_palavra, char *arquivo_dica ) {
     jogo->quantidade_erros = 0;
     jogo->ganhou = false;
@@ -49,3 +48,25 @@ void init_mascarara( char *mascara, char *palavra, unsigned int tamanho_palavra 
     }
     mascara[i] = '\0';
 }
+
+bool existe_letra_na_palavra( char carac, char *palavra ) {
+    unsigned int i;
+
+    for( i = 0; i < strlen( palavra ); i++ ) {
+        if( carac == palavra[i] ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void substituir_letra_na_mascara( char carac, char *palavra, char *mascara ) {
+    unsigned int i;
+
+    for( i = 0; i < strlen( palavra ); i++ ) {
+        if( palavra[i] == carac ) {
+            mascara[i] = carac;
+        }
+    }
+}
+
