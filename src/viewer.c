@@ -2,7 +2,15 @@
 #include <stdio.h>
 #include <string.h>
 
+void exibir_mascara( char *mascara ) {
+    static unsigned int i;
 
+    for( i = 0; i < strlen( mascara ); i++ ) {
+        printf( "%c ", *( mascara + i ) ); //É mais rápido que indexação
+    }
+
+    printf( "\b\n" );
+}
 
 void exibir_dica( char *dica ) {
     printf( "Dica: %s\n", dica );
