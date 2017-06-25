@@ -45,31 +45,33 @@ int jogar( char *arquivo_palavra, char *arquivo_dica ) {
     dica = string_get_text( jogo.partida.dica );
     letras_erradas = string_get_text( jogo.letras_erradas );
 
-    do {
-        limpar_tela();
+    if( palavra && mascara && dica && letras_erradas ) {
+        do {
+            limpar_tela();
 
-        exibir_jogo( jogo.quantidade_erros, dica, mascara, letras_erradas );
+            exibir_jogo( jogo.quantidade_erros, dica, mascara, letras_erradas );
 
-        printf( "\nDigite uma letra:" );
-        scanf( " %c", &carac );
+            printf( "\nDigite uma letra:" );
+            scanf( " %c", &carac );
 
-        if( !existe_letra_na_palavra( carac, palavra ) ) {
-            if( !existe_letra_nas_erradas( carac, letras_erradas ) ) {
-                jogo.quantidade_erros++;
-                sprintf( tmp, "%c", carac );
-                string_concat_char_array( jogo.letras_erradas, tmp );
+            if( !existe_letra_na_palavra( carac, palavra ) ) {
+                if( !existe_letra_nas_erradas( carac, letras_erradas ) ) {
+                    jogo.quantidade_erros++;
+                    sprintf( tmp, "%c", carac );
+                    string_concat_char_array( jogo.letras_erradas, tmp );
+                }
+            } else {
+                substituir_letra_na_mascara( carac, palavra, mascara );
             }
-        } else {
-            substituir_letra_na_mascara( carac, palavra, mascara );
-        }
 
-        if( !comparar_mascara_palavra( mascara, palavra ) ) {
-            jogo.ganhou = true;
-        }
-    } while( !jogo.ganhou && jogo.quantidade_erros < MAX_ERRO );
+            if( !comparar_mascara_palavra( mascara, palavra ) ) {
+                jogo.ganhou = true;
+            }
+        } while( !jogo.ganhou && jogo.quantidade_erros < MAX_ERRO );
 
-    limpar_tela();
-    exibir_resultado_e_palavra( palavra, jogo.ganhou );
+        limpar_tela();
+        exibir_resultado_e_palavra( palavra, jogo.ganhou );
+    }
 
     finalizar( &jogo );
 
@@ -84,6 +86,10 @@ void init_configuracoes( Jogo *jogo, char *arquivo_palavra, char *arquivo_dica )
 
     jogo->letras_erradas = string_new();
     jogo->mascara = string_new_with_size( string_get_length( jogo->partida.palavra ) );
+
+    if( !jogo->letras_erradas || !jogo->mascara ) { // NULL pointer
+        return;
+    }
 
     init_mascarara( string_get_text( jogo->mascara ),
                     string_get_text( jogo->partida.palavra ),
