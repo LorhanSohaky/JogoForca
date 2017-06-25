@@ -10,14 +10,23 @@ void pegar_dica( Partida *partida, char *arquivo_dica, unsigned int linha_dica )
 void ir_para_linha( FILE *arquivo, unsigned int linha );
 String *ler_string( FILE *arquivo );
 
-unsigned int pegar_total_linhas( char *arquivo_palavra );
+int pegar_total_linhas( char *arquivo_palavra );
 unsigned int sortear_linha( unsigned int quantidade_linhas );
 
 void sortear_partida( Partida *partida, char *arquivo_palavra, char *arquivo_dica ) {
-    pegar_palavra(
-        partida, arquivo_palavra, sortear_linha( pegar_total_linhas( arquivo_palavra ) ) );
+    int total_linhas;
 
-    pegar_dica( partida, arquivo_dica, partida->fk_dica );
+    total_linhas = pegar_total_linhas( arquivo_palavra );
+
+    if( total_linhas == -1 ) {
+        return;
+    }
+
+    pegar_palavra( partida, arquivo_palavra, sortear_linha( total_linhas ) );
+
+    if( partida->palavra ) {
+        pegar_dica( partida, arquivo_dica, partida->fk_dica );
+    }
 }
 
 void pegar_palavra( Partida *partida, char *arquivo_palavra, unsigned int linha_palavra ) {
@@ -58,7 +67,7 @@ unsigned int sortear_linha( unsigned int quantidade_linhas ) {
     return rand() % quantidade_linhas;
 }
 
-unsigned int pegar_total_linhas( char *arquivo_palavra ) {
+int pegar_total_linhas( char *arquivo_palavra ) {
     FILE *arquivo;
     unsigned int quantidade_linhas = 0;
 
@@ -97,7 +106,9 @@ String *ler_string( FILE *arquivo ) {
     }
 
     while( fscanf( arquivo, "%100[^\n]", tmp ) ) {
-        string_concat_char_array( string, tmp );
+        if( !string_concat_char_array( string, tmp ) ) {
+            return NULL;
+        }
     }
 
     return string;
