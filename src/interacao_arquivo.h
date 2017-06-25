@@ -3,22 +3,16 @@
 
 #include <dstring.h>
 
-struct st_dica {
-    String *dica;
-};
-
-typedef struct st_dica Dica;
-
-struct st_palavra {
+struct st_partida {
     String *palavra;
 
     unsigned int fk_dica;
 
-    Dica dica;
+    String *dica;
 };
 
-typedef struct st_palavra Palavra;
+typedef struct st_partida Partida;
 
-Palavra sortear_palavra( char *arquivo_palavra, char *arquivo_dica );
+void sortear_partida( Partida *partida, char *arquivo_palavra, char *arquivo_dica );
 
 #endif

@@ -11,7 +11,7 @@
 typedef struct {
     bool ganhou;
 
-    Palavra palavra;
+    Partida partida;
 
     unsigned int quantidade_erros;
     String *letras_erradas;
@@ -40,9 +40,9 @@ int jogar( char *arquivo_palavra, char *arquivo_dica ) {
 
     init_configuracoes( &jogo, arquivo_palavra, arquivo_dica );
 
-    palavra = string_get_text( jogo.palavra.palavra );
+    palavra = string_get_text( jogo.partida.palavra );
     mascara = string_get_text( jogo.mascara );
-    dica = string_get_text( jogo.palavra.dica.dica );
+    dica = string_get_text( jogo.partida.dica );
     letras_erradas = string_get_text( jogo.letras_erradas );
 
     do {
@@ -80,14 +80,14 @@ void init_configuracoes( Jogo *jogo, char *arquivo_palavra, char *arquivo_dica )
     jogo->quantidade_erros = 0;
     jogo->ganhou = false;
 
-    jogo->palavra = sortear_palavra( arquivo_palavra, arquivo_dica );
+    sortear_partida( &jogo->partida, arquivo_palavra, arquivo_dica );
 
     jogo->letras_erradas = string_new();
-    jogo->mascara = string_new_with_size( string_get_length( jogo->palavra.palavra ) );
+    jogo->mascara = string_new_with_size( string_get_length( jogo->partida.palavra ) );
 
     init_mascarara( string_get_text( jogo->mascara ),
-                    string_get_text( jogo->palavra.palavra ),
-                    string_get_length( jogo->palavra.palavra ) );
+                    string_get_text( jogo->partida.palavra ),
+                    string_get_length( jogo->partida.palavra ) );
 }
 
 void init_mascarara( char *mascara, char *palavra, unsigned int tamanho_palavra ) {
@@ -141,8 +141,8 @@ bool existe_letra_nas_erradas( char carac, char *letras_erradas ) {
 }
 
 void finalizar( Jogo *jogo ) {
-    string_free( jogo->palavra.palavra );
-    string_free( jogo->palavra.dica.dica );
+    string_free( jogo->partida.palavra );
+    string_free( jogo->partida.dica );
     string_free( jogo->mascara );
     string_free( jogo->letras_erradas );
 }

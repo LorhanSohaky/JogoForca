@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-Palavra pegar_palavra( char *arquivo_palavra, unsigned int linha_palavra );
-Dica pegar_dica( char *arquivo_dica, unsigned int linha_dica );
+void pegar_palavra( Partida *partida, char *arquivo_palavra, unsigned int linha_palavra );
+void pegar_dica( Partida *partida, char *arquivo_dica, unsigned int linha_dica );
 
 void ir_para_linha( FILE *arquivo, unsigned int linha );
 String *ler_string( FILE *arquivo );
@@ -13,56 +13,44 @@ String *ler_string( FILE *arquivo );
 unsigned int pegar_total_linhas( char *arquivo_palavra );
 unsigned int sortear_linha( unsigned int quantidade_linhas );
 
-Palavra sortear_palavra( char *arquivo_palavra, char *arquivo_dica ) {
-    Palavra palavra;
+void sortear_partida( Partida *partida, char *arquivo_palavra, char *arquivo_dica ) {
+    pegar_palavra(
+        partida, arquivo_palavra, sortear_linha( pegar_total_linhas( arquivo_palavra ) ) );
 
-    palavra =
-        pegar_palavra( arquivo_palavra, sortear_linha( pegar_total_linhas( arquivo_palavra ) ) );
-
-    palavra.dica = pegar_dica( arquivo_dica, palavra.fk_dica );
-
-    return palavra;
+    pegar_dica( partida, arquivo_dica, partida->fk_dica );
 }
 
-Palavra pegar_palavra( char *arquivo_palavra, unsigned int linha_palavra ) {
+void pegar_palavra( Partida *partida, char *arquivo_palavra, unsigned int linha_palavra ) {
     FILE *arquivo;
-
-    Palavra palavra;
 
     arquivo = fopen( arquivo_palavra, "r" );
     if( !arquivo ) {
-        return palavra;
+        return;
     }
 
     ir_para_linha( arquivo, linha_palavra );
 
-    fscanf( arquivo, "%d", &palavra.fk_dica );
+    fscanf( arquivo, "%d", &partida->fk_dica );
 
     fscanf( arquivo, "%*c" );
 
-    palavra.palavra = ler_string( arquivo );
+    partida->palavra = ler_string( arquivo );
 
     fclose( arquivo );
-
-    return palavra;
 }
 
-Dica pegar_dica( char *arquivo_dica, unsigned int linha_dica ) {
+void pegar_dica( Partida *partida, char *arquivo_dica, unsigned int linha_dica ) {
     FILE *arquivo;
-
-    Dica dica;
 
     arquivo = fopen( arquivo_dica, "r" );
     if( !arquivo ) {
-        return dica;
+        return;
     }
 
     ir_para_linha( arquivo, linha_dica );
-    dica.dica = ler_string( arquivo );
+    partida->dica = ler_string( arquivo );
 
     fclose( arquivo );
-
-    return dica;
 }
 
 unsigned int sortear_linha( unsigned int quantidade_linhas ) {
