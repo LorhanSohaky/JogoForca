@@ -59,7 +59,7 @@ void pegar_palavra( Partida *partida, char *arquivo_palavra, unsigned int linha_
 
     ir_para_linha( arquivo, linha_palavra );
 
-    fscanf( arquivo, "%d", &partida->fk_dica );
+    fscanf( arquivo, "%u", &partida->fk_dica );
 
     fscanf( arquivo, "%*c" );
 
