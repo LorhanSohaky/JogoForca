@@ -53,8 +53,6 @@ void finalizar( Jogo *jogo );
 int jogar( char *arquivo_palavra, char *arquivo_dica ) {
     Jogo jogo;
 
-    char tmp[2];
-
     char *palavra, *mascara, *dica, *letras_erradas;
     char carac;
 
@@ -76,6 +74,8 @@ int jogar( char *arquivo_palavra, char *arquivo_dica ) {
 
             if( !existe_letra_na_palavra( carac, palavra ) ) {
                 if( !existe_letra_nas_erradas( carac, letras_erradas ) ) {
+                	char tmp[2];
+                	
                     jogo.quantidade_erros++;
                     sprintf( tmp, "%c", carac );
                     string_concat_char_array( jogo.letras_erradas, tmp );
