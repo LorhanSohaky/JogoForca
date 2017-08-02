@@ -22,22 +22,22 @@ SOFTWARE.
 #include <stdio.h>
 #include <string.h>
 
-void exibir_boneco( unsigned int quantidade_erros );
-void exibir_dica( char *dica );
-void exibir_mascara( char *mascara );
-void exibir_letras_erradas( char *letras_tentadas );
+static void exibir_boneco( const unsigned int quantidade_erros );
+static void exibir_dica( const char *dica );
+static void exibir_mascara( const char *mascara );
+static void exibir_letras_erradas( const char *letras_tentadas );
 
-void exibir_jogo( unsigned int quantidade_erros,
-                  char *dica,
-                  char *mascara,
-                  char *letras_tentadas ) {
+void exibir_jogo( const unsigned int quantidade_erros,
+                  const char *dica,
+                  const char *mascara,
+                  const char *letras_tentadas ) {
     exibir_boneco( quantidade_erros );
     exibir_dica( dica );
     exibir_mascara( mascara );
     exibir_letras_erradas( letras_tentadas );
 }
 
-void exibir_letras_erradas( char *letras_tentadas ) {
+static void exibir_letras_erradas( const char *letras_tentadas ) {
     static unsigned int i;
 
     printf( "\n" );
@@ -48,7 +48,7 @@ void exibir_letras_erradas( char *letras_tentadas ) {
     printf( "\b\n" );
 }
 
-void exibir_mascara( char *mascara ) {
+static void exibir_mascara( const char *mascara ) {
     static unsigned int i;
 
     for( i = 0; i < strlen( mascara ); i++ ) {
@@ -58,11 +58,11 @@ void exibir_mascara( char *mascara ) {
     printf( "\b\n" );
 }
 
-void exibir_dica( char *dica ) {
+static void exibir_dica( const char *dica ) {
     printf( "Dica: %s\n", dica );
 }
 
-void exibir_boneco( unsigned int quantidade_erros ) {
+static void exibir_boneco( const unsigned int quantidade_erros ) {
     switch( quantidade_erros ) {
         case 0:
             printf( "┏━━━━━━━━━━━━━┓\n" );
@@ -174,7 +174,7 @@ void exibir_boneco( unsigned int quantidade_erros ) {
     }
 }
 
-void exibir_resultado_e_palavra( char *palavra, bool ganhou ) {
+void exibir_resultado_e_palavra( const char *palavra, const bool ganhou ) {
     printf( "Palavra: %s\n", palavra );
     if( ganhou ) {
         printf( "PARABÉNS!\n" );

@@ -23,9 +23,12 @@ SOFTWARE.
 
 #include <stdbool.h>
 
-void exibir_jogo( unsigned int quantidade_erros, char *dica, char *mascara, char *letras_tentadas );
+void exibir_jogo( const unsigned int quantidade_erros,
+                  const char *dica,
+                  const char *mascara,
+                  const char *letras_tentadas );
 
-void exibir_resultado_e_palavra( char *palavra, bool ganhou );
+void exibir_resultado_e_palavra( const char *palavra, const bool ganhou );
 
 void limpar_tela();
 
