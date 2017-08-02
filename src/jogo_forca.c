@@ -21,6 +21,7 @@ SOFTWARE.
 #include "jogo_forca.h"
 #include "interacao_arquivo.h"
 #include "viewer.h"
+#include <ctype.h>
 #include <dstring.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -41,16 +42,19 @@ typedef struct {
     char *arquivo_palavra;
 } Jogo;
 
-bool existe_letra_na_palavra( char carac, char *palavra );
-bool existe_letra_nas_erradas( char carac, char *letras_erradas );
+static void init_configuracoes( Jogo *jogo, const char *arquivo_palavra, const char *arquivo_dica );
+static void preparar_palavra( char *palavra );
+static void init_mascarara( char *mascara, const char *palavra );
 
-int comparar_mascara_palavra( char *mascara, char *palavra );
-void substituir_letra_na_mascara( char carac, char *palavra, char *mascara );
-void init_configuracoes( Jogo *jogo, char *arquivo_palavra, char *arquivo_dica );
-void init_mascarara( char *mascara, char *palavra, unsigned int tamanho_palavra );
-void finalizar( Jogo *jogo );
+static bool existe_letra_na_palavra( const char carac, const char *palavra );
+static bool existe_letra_nas_erradas( const char carac, const char *letras_erradas );
 
-int jogar( char *arquivo_palavra, char *arquivo_dica ) {
+static int comparar_mascara_palavra( const char *mascara, const char *palavra );
+static void substituir_letra_na_mascara( const char carac, const char *palavra, char *mascara );
+
+static void finalizar( Jogo *jogo );
+
+int jogar( const char *arquivo_palavra, const char *arquivo_dica ) {
     Jogo jogo;
 
     char tmp[2];
@@ -73,6 +77,7 @@ int jogar( char *arquivo_palavra, char *arquivo_dica ) {
 
             printf( "\nDigite uma letra:" );
             scanf( " %c", &carac );
+            carac = toupper( carac );
 
             if( !existe_letra_na_palavra( carac, palavra ) ) {
                 if( !existe_letra_nas_erradas( carac, letras_erradas ) ) {
@@ -98,7 +103,8 @@ int jogar( char *arquivo_palavra, char *arquivo_dica ) {
     return !jogo.ganhou;
 }
 
-void init_configuracoes( Jogo *jogo, char *arquivo_palavra, char *arquivo_dica ) {
+static void
+init_configuracoes( Jogo *jogo, const char *arquivo_palavra, const char *arquivo_dica ) {
     jogo->quantidade_erros = 0;
     jogo->ganhou = false;
 
@@ -111,17 +117,28 @@ void init_configuracoes( Jogo *jogo, char *arquivo_palavra, char *arquivo_dica )
         return;
     }
 
-    init_mascarara( string_get_text( jogo->mascara ),
-                    string_get_text( jogo->partida.palavra ),
-                    string_get_length( jogo->partida.palavra ) );
+    preparar_palavra( string_get_text( jogo->partida.palavra ) );
+
+    init_mascarara( string_get_text( jogo->mascara ), string_get_text( jogo->partida.palavra ) );
 }
 
-void init_mascarara( char *mascara, char *palavra, unsigned int tamanho_palavra ) {
+static void preparar_palavra( char *palavra ) {
     unsigned int i;
 
-    for( i = 0; i < tamanho_palavra; i++ ) {
+    for( i = 0; i < strlen( palavra ); i++ ) {
         if( palavra[i] == '_' || palavra[i] == '-' || palavra[i] == ' ' ) {
             palavra[i] = '-';
+        } else {
+            palavra[i] = toupper( palavra[i] );
+        }
+    }
+}
+
+static void init_mascarara( char *mascara, const char *palavra ) {
+    unsigned int i;
+
+    for( i = 0; i < strlen( palavra ); i++ ) {
+        if( palavra[i] == '-' ) {
             mascara[i] = '-';
         } else {
             mascara[i] = '_';
@@ -130,7 +147,7 @@ void init_mascarara( char *mascara, char *palavra, unsigned int tamanho_palavra 
     mascara[i] = '\0';
 }
 
-bool existe_letra_na_palavra( char carac, char *palavra ) {
+static bool existe_letra_na_palavra( const char carac, const char *palavra ) {
     unsigned int i;
 
     for( i = 0; i < strlen( palavra ); i++ ) {
@@ -141,7 +158,7 @@ bool existe_letra_na_palavra( char carac, char *palavra ) {
     return false;
 }
 
-void substituir_letra_na_mascara( char carac, char *palavra, char *mascara ) {
+static void substituir_letra_na_mascara( const char carac, const char *palavra, char *mascara ) {
     unsigned int i;
 
     for( i = 0; i < strlen( palavra ); i++ ) {
@@ -151,11 +168,11 @@ void substituir_letra_na_mascara( char carac, char *palavra, char *mascara ) {
     }
 }
 
-int comparar_mascara_palavra( char *mascara, char *palavra ) {
-    return strcmp( mascara, palavra );
+static int comparar_mascara_palavra( const char *mascara, const char *palavra ) {
+    return strcoll( mascara, palavra );
 }
 
-bool existe_letra_nas_erradas( char carac, char *letras_erradas ) {
+static bool existe_letra_nas_erradas( const char carac, const char *letras_erradas ) {
     unsigned int i;
 
     for( i = 0; i < strlen( letras_erradas ); i++ ) {
@@ -166,7 +183,7 @@ bool existe_letra_nas_erradas( char carac, char *letras_erradas ) {
     return false;
 }
 
-void finalizar( Jogo *jogo ) {
+static void finalizar( Jogo *jogo ) {
     string_free( jogo->partida.palavra );
     string_free( jogo->partida.dica );
     string_free( jogo->mascara );
