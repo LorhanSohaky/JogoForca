@@ -19,9 +19,12 @@ SOFTWARE.
 */
 
 #include "jogo_forca.h"
+#include <locale.h>
 #include <stdio.h>
 
 int main( int argc, char *argv[] ) {
+    setlocale( LC_ALL, "Portuguese" );
+
     if( argc < 3 ) {
         printf( "Argumentos invalidos\n" );
         printf( "Voce deve passar o arquivo com as palavras e o arquivo com as dicas\n" );
