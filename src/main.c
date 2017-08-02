@@ -26,8 +26,9 @@ int main( int argc, const char *argv[] ) {
     setlocale( LC_ALL, "Portuguese" );
 
     if( argc < 3 ) {
-        printf( "Argumentos invalidos\n" );
+        printf( "Argumentos inválidos\n" );
         printf( "Voce deve passar o arquivo com as palavras e o arquivo com as dicas\n" );
+        printf( "Tente: %s arquivo_palavra arquivo_dica\n", argv[0] );
         return 1;
     } else {
         return jogar( argv[1], argv[2] );
