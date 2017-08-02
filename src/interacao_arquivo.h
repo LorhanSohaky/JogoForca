@@ -33,6 +33,6 @@ struct st_partida {
 
 typedef struct st_partida Partida;
 
-void sortear_partida( Partida *partida, char *arquivo_palavra, char *arquivo_dica );
+void sortear_partida( Partida *partida, const char *arquivo_palavra, const char *arquivo_dica );
 
 #endif

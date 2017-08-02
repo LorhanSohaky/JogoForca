@@ -24,16 +24,18 @@ SOFTWARE.
 #include <stdlib.h>
 #include <time.h>
 
-void pegar_palavra( Partida *partida, char *arquivo_palavra, unsigned int linha_palavra );
-void pegar_dica( Partida *partida, char *arquivo_dica, unsigned int linha_dica );
+void pegar_palavra( Partida *partida,
+                    const char *arquivo_palavra,
+                    const unsigned int linha_palavra );
+void pegar_dica( Partida *partida, const char *arquivo_dica, const unsigned int linha_dica );
 
-void ir_para_linha( FILE *arquivo, unsigned int linha );
+void ir_para_linha( FILE *arquivo, const unsigned int linha );
 String *ler_string( FILE *arquivo );
 
-int pegar_total_linhas( char *arquivo_palavra );
-unsigned int sortear_linha( unsigned int quantidade_linhas );
+int pegar_total_linhas( const char *arquivo_palavra );
+unsigned int sortear_linha( const unsigned int quantidade_linhas );
 
-void sortear_partida( Partida *partida, char *arquivo_palavra, char *arquivo_dica ) {
+void sortear_partida( Partida *partida, const char *arquivo_palavra, const char *arquivo_dica ) {
     int total_linhas;
 
     total_linhas = pegar_total_linhas( arquivo_palavra );
@@ -49,7 +51,9 @@ void sortear_partida( Partida *partida, char *arquivo_palavra, char *arquivo_dic
     }
 }
 
-void pegar_palavra( Partida *partida, char *arquivo_palavra, unsigned int linha_palavra ) {
+void pegar_palavra( Partida *partida,
+                    const char *arquivo_palavra,
+                    const unsigned int linha_palavra ) {
     FILE *arquivo;
 
     arquivo = fopen( arquivo_palavra, "r" );
@@ -68,7 +72,7 @@ void pegar_palavra( Partida *partida, char *arquivo_palavra, unsigned int linha_
     fclose( arquivo );
 }
 
-void pegar_dica( Partida *partida, char *arquivo_dica, unsigned int linha_dica ) {
+void pegar_dica( Partida *partida, const char *arquivo_dica, const unsigned int linha_dica ) {
     FILE *arquivo;
 
     arquivo = fopen( arquivo_dica, "r" );
@@ -82,12 +86,12 @@ void pegar_dica( Partida *partida, char *arquivo_dica, unsigned int linha_dica )
     fclose( arquivo );
 }
 
-unsigned int sortear_linha( unsigned int quantidade_linhas ) {
+unsigned int sortear_linha( const unsigned int quantidade_linhas ) {
     srand( time( NULL ) );
     return rand() % quantidade_linhas;
 }
 
-int pegar_total_linhas( char *arquivo_palavra ) {
+int pegar_total_linhas( const char *arquivo_palavra ) {
     FILE *arquivo;
     unsigned int quantidade_linhas = 0;
 
@@ -106,7 +110,7 @@ int pegar_total_linhas( char *arquivo_palavra ) {
     return quantidade_linhas;
 }
 
-void ir_para_linha( FILE *arquivo, unsigned int linha ) {
+void ir_para_linha( FILE *arquivo, const unsigned int linha ) {
     unsigned int i = 0;
 
     while( linha != i ) {
