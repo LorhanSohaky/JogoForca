@@ -22,7 +22,7 @@ SOFTWARE.
 #include <locale.h>
 #include <stdio.h>
 
-int main( int argc, char *argv[] ) {
+int main( int argc, const char *argv[] ) {
     setlocale( LC_ALL, "Portuguese" );
 
     if( argc < 3 ) {
