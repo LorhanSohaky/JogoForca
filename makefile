@@ -28,7 +28,7 @@ LIBDIR := -L/usr/lib
 #PTHREADFLAG = -lpthread
 
 # Extra flags to give to the C compiler.
-CFLAGS := -Wall -I./utils
+CFLAGS := -Wall -I./utils/String/src
 
 ALLCOMPFLAGS := $(GENERALSTARTFLAGS) $(INCLUSIONFLAGS)
 
@@ -47,7 +47,7 @@ MAINDIR := src
 # Name of main file
 MAINFILE := main.c
 # All source directories (except test files directory)
-SOURCEDIRS := src utils
+SOURCEDIRS := src utils/String/src
 
 UNPROCESSEDDIRLIST := $(SOURCEDIRS)
 
